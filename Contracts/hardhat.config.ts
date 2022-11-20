@@ -21,6 +21,10 @@ const config: HardhatUserConfig = {
     polygonMumbai: {
       url: process.env.POLYGON_MUMBAI_RPC_URL,
       accounts: [`${process.env.DEPLOYER_PRIVATE_KEY}`],
+    },
+    scrollTestnet: {
+      url: process.env.SCROLL_TESTNET_URL,
+      accounts: [`${process.env.DEPLOYER_PRIVATE_KEY}`],
     }
   },
   solidity: {

@@ -16,14 +16,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Button, TextField } from "@material-ui/core";
 import axios from "axios";
 import { useEffect } from "react";
-import Select from 'react-select'
-
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import { SelectChangeEvent } from '@mui/material/Select';
-
-
 
 // Guard comoponent
 const Guard = () => {
@@ -33,21 +25,13 @@ const Guard = () => {
   const [Spdetail,setSpDetails] = useState([]);
   const [data,setData] = useState([]);
   const userId=localStorage.getItem("id");
-  const [value,setValue]= useState("")
-  const [walletname,setName] = useState("")
+  const [value,setValue]=useState("Select Wallet Address")
   // const userId="0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6";
 
   const columns = [
     { title: "SP Address", field: "sp" },
     { title: "Fee", field: "fee" },
   ];
-
-
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-
 
  
 
@@ -94,11 +78,11 @@ useEffect(()=>{
 },[])
 
 // drop down handler
-const dropDownHandler=(id,obj)=>{
+const dropDownHandler=(obj,id)=>{
   
- console.log("obj",obj);
+ console.log( Spdetail[id]);
  setData(Spdetail[id]);
- setValue(obj);
+ setValue(obj)
 }
 
 
@@ -137,35 +121,17 @@ const dropDownHandler=(id,obj)=>{
                         }}
                       > 
 
+                      
 
-
-                      <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={age}
-                        label="Age"
-                        onChange={handleChange}
-                      >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        
-                      </Select>
-                    </FormControl>
-
-
-
-
-
-
-                     
-
-
-
-                
-
-
-
+                       <DropdownButton id="dropdown-basic-button" title={value} >
+                      {
+                        walletId.map((obj,id) => (
+                          <>
+                          <Dropdown.Item href="#/action-1" onClick={()=>dropDownHandler(obj,id) } >{obj}</Dropdown.Item>
+                          </>
+                      ))
+                      }
+                      </DropdownButton>
                           
                       </div>
                       </div>

@@ -1,37 +1,158 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import FooterAdmin from "./FooterAdmin";
 import TopBarAdmin from "./TopBarAdmin";
 import SideBarAdmin from "./SideBarAdmin";
 
 import CustomTable from "../CustomTable";
-
-import "react-toastify/dist/ReactToastify.css";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
 import { IconButton } from "@material-ui/core";
+import "react-toastify/dist/ReactToastify.css";
+import { Button, TextField } from "@material-ui/core";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 import axios from "axios";
 
 const AdminDashboard = () => {
- const[data1,setData1]=useState([]);
- const[data2,setData2]=useState([]);
+ const[enrollData,setData]=useState([]);
+ const [isOpenDelete, setOpenDelete] = useState(false);
+ const [isOpenConfirm, setOpenConfirm] = useState(false);
+ const [isOpenApprove, setOpenApprove] = useState(false);
+ const [isOpenReject, setOpenReject] = useState(false);
 
-  const getData=async() =>{
-    try {
-      const response=await axios.get("http://localhost:3001/");
-      setData1(response.data);
-      console.log(response.data);
+ const [wallet,setWallet]=useState("");
+ const [selectedRows, setSelectedRows] = useState([]);
+ const [ dltnotes, getdltNotes] = useState();
+ const [isOpenAddEnrollUser, setOpenAddEnrollUser] = useState(false);
+ const theme = useTheme();
+ const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-    }catch(error){
-      console.log(error);
+ const [valuesEnrollUser, setValuesEnrollUser] = useState({
+  walletAddress: '',
+  userAddress: '',
+  spAddress: '',
+  fee: '',
+  type: '',
+});
+
+ const columns2 = [
+  { title: "ReqId", field: "enrollReqId" },
+  { title: "Wallet Address", field: "walletAddress" },
+  { title: "SP address", field: "spAddress" },
+  { title: "Type", field: "type" },
+  { title: "Fee", field: "fee" },
+  { title: "Status", field: "status" },
+];
+
+const handleClose = () => {
+  setOpenDelete(false);
+  setOpenConfirm(false);
+  setOpenApprove(false);
+  setOpenReject(false);
+  setOpenAddEnrollUser(false);
+};
+
+
+ const dataWallet = [
+    {
+      SPAddress: "0xf9901cc6bbc8518088b2c8350fcd0635a23b250e",
+      Rate: "10",
+      Rating: 2,
+    },
+    {
+      SPAddress: "0xBf7E2F0d6F3cE0AeD6711385b474d0cbdd966965",
+      Rate: "10",
+      Rating: 3,
+    },
+    {
+      SPAddress: "0xEe45A7dfe2EbDB8d113Ec669F2682f27DAC5Fc31",
+      Rate: "10",
+      Rating: 3,
+    },
+    {
+      SPAddress: "0xd5E5C7085d8e39e9242f910E1116B222c4002DC0",
+      Rate: "0.5",
+      Rating: 4,
+    },
+    {
+      SPAddress: "0xF538E6A7b08e4E2770F81B97dB4bbB6C475a4d6c",
+      Rate: "20",
+      Rating: 4,
+    },
+    {
+      SPAddress: "0x8d7477E0A4D9A3A5E81FeE5B0956Abf374C961bA",
+      Rate: "20",
+      Rating: 5,
+    },
+    {
+      SPAddress: "0xF9901CC6bbC8518088B2C8350fCd0635A23b250E",
+      Rate: "15",
+      Rating: 5,
+    },
+    {
+      SPAddress: "0x23Ed077d5c630cF9b55324Ca3bC706a70ffCb696",
+      Rate: "15",
+      Rating: 5,
+    },
+  ];
+  //0xF9901CC6bbC8518088B2C8350fCd0635A23b250E
+
+ const[isSP, setSP] = useState(dataWallet);
+ const [selectId, setSelectId] = useState(null);
+ const UserKey = localStorage.getItem("id");
+ //const UserKey = "0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf";
+ const handleDeletePopup = (_, data) => {
+  setSelectId(data.enrollReqId);
+  setOpenConfirm(true)};
+ const handleConfirmPopup = (_, data) => {
+  setSelectId(data.enrollReqId);
+  setOpenConfirm(true)
+};
+ const handleApprovePopup = (_, data) => {
+  setSelectId(data.enrollReqId);
+  setOpenApprove(true)
+};
+ const handleRejectPopup = (_, data) => {
+  setSelectId(data.enrollReqId);
+  setOpenReject(true)
+};
+ const setWalletInfo=(e)=>{
+   
+   console.log(e.target.value);
+   setWallet(e.target.value)
+     
+ }
+ //0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf
+ const isFoundSP = isSP.some(item => {
+    if (item.SPAddress === UserKey) {
+      return true;
     }
-  }
-  const getData1=async() =>{
-    try {
-      const response=await axios.get("http://localhost:3001/");
-      setData2(response.data);
-      console.log(response.data);
+    return false;
+  });
+console.log('isFoundSP', isFoundSP);
 
+  // getEnrollData
+  const getData=async() =>{
+    const params = {
+      //"userAddress": "0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6",
+      "userAddress": UserKey
+    }
+    try {
+      const response=await axios.get("http://localhost:3001/getEnrollData", { params });
+      //console.log('response', response);
+      setData(response.data);
     }catch(error){
       console.log(error);
     }
@@ -39,8 +160,81 @@ const AdminDashboard = () => {
 
   useEffect(()=>{
     getData();
-    getData1();
   },[])
+
+  const handleConfirm = () => {
+    const url = 'http://localhost:3001/userConfirmEnrollRequest/';
+    const param = { reqId: selectId };
+    axios.post(url, param)
+        .then(response => {
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            onClose: () =>{
+              handleClose();
+              window.location.reload();
+            }
+        });
+        });
+  };
+
+  const handleDelete = () => {setOpenDelete(true)};
+ 
+  const handleApprove = () => {
+    console.log(selectId)
+    const url = 'http://localhost:3001/actUserEnrollRequest';
+    const param = { 
+      reqId: selectId,
+      action: 'approved'
+    };
+    console.log(param);
+    axios.patch(url, param)
+        .then(response => {
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            onClose: () =>{
+              handleClose();
+              window.location.reload();
+            }
+        });
+        });
+  };
+  const handleReject = () => {
+    console.log(selectId)
+    const url = 'http://localhost:3001/actUserEnrollRequest/';
+    const param = { 
+      reqId: selectId,
+      action: 'rejected'
+    };
+    axios.patch(url, param)
+        .then(response => {
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            onClose: () =>{
+              handleClose();
+              window.location.reload();
+            }
+        });
+        });
+  };
+
   const columns1 = [
     {
       title: "Action Type",
@@ -50,31 +244,30 @@ const AdminDashboard = () => {
     { title: "SP address", field: "SPAddress" },
   ];
 
-  const columns2 = [
-    {
-      title: "Timestamp",
-      field: "timestamp",
-    },
-    { title: "ReqId", field: "ReqId" },
-    { title: "Wallet Address", field: "WalletAddress" },
-    { title: "SP address", field: "SPAddress" },
-    { title: "Type", field: "Type" },
-    { title: "Fee", field: "Fee" },
-    { title: "Status", field: "Status" },
-   
-  ];
+  
   const columns3 = [
     {
       title: "Timestamp",
       field: "timestamp",
     },
-    { title: "ReqId", field: "ReqId" },
-    { title: "Type", field: "Type" },
-    { title: "Fee", field: "Fee" },
-    { title: "Status", field: "Status" },
+    { title: "ReqId", field: "enrollReqId" },
+    { title: "Type", field: "type" },
+    { title: "Fee", field: "fee" },
+    { title: "Status", field: "status" },
   ];
 
-  return (
+  
+
+  console.log("sp",isSP);
+  console.log(UserKey);
+  const handlePopupAddEnrollUser = () => {
+    setOpenAddEnrollUser(true);
+  }
+
+  const handleChangeEnrollUser = (prop) => (event) => {
+      setValuesEnrollUser({ ...valuesEnrollUser, [prop]: event.target.value });
+  };
+return (
     <>
       <div className="adm">
         <div className="mb-3">
@@ -191,7 +384,7 @@ const AdminDashboard = () => {
                               </dl>
                             </div>
                           </div>
-
+                          
                           <div className="tw-bg-white tw-px-[15px] tw-py-[11px] tw-rounded-[6px] tw-w-full tw-min-h-[140px] tw-flex tw-flex-col tw-justify-start">
                             <div className="tw-w-[37px] tw-h-[37px] tw-rounded-full tw-bg-[#ECEEF6] tw-grid tw-place-items-center tw-cursor-pointer">
                               <svg
@@ -232,12 +425,20 @@ const AdminDashboard = () => {
                                         color: "#000",
                                       },
                                     }}
+                                    actions={[
+                                      {
+                                        icon: 'save',
+                                        tooltip: 'Save User',
+                                        onClick: (event, rowData) => alert("You saved " + rowData.name)
+                                      }
+                                    ]}
                                   />
                                 </div>
                               </dl>
                             </div>
                           </div>
 
+                          {!isFoundSP && 
                           <div className="tw-bg-white tw-px-[15px] tw-py-[11px] tw-rounded-[6px] tw-w-full tw-min-h-[140px] tw-flex tw-flex-col tw-justify-start">
                             <div className="tw-w-[37px] tw-h-[37px] tw-rounded-full tw-bg-[#ECEEF6] tw-grid tw-place-items-center tw-cursor-pointer">
                               <svg
@@ -256,7 +457,6 @@ const AdminDashboard = () => {
                                 </g>
                               </svg>
                             </div>
-
                             <div className="tw-mt-[12px]">
                               <dl>
                                 <dt className="tw-font-bold tw-text-[15px] tw-text-black tw-text-left">
@@ -267,24 +467,38 @@ const AdminDashboard = () => {
                                   <CustomTable
                                     title="All Candidates List"
                                     columns={columns2}
-                                    data={[]}
+                                    data={enrollData.payload?.message}
+                                    onSelectionChange={(rows) => setSelectedRows(rows)}
                                     options={{
                                       actionsColumnIndex: -1,
                                       addRowPosition: "first",
-                                      selection: true,
-
+                                      selection: false,
                                       headerStyle: {
                                         backgroundColor: "#eaeffb",
                                         color: "#000",
                                       },
                                     }}
+                                    actions={[
+                                      {
+                                        icon: "deleteaddalt",
+                                        tooltip: "Delete",
+                                        onClick: handleDeletePopup,
+                                      },
+                                      {
+                                        icon: "checkaddalt",
+                                        tooltip: "Confirm",
+                                        onClick: handleConfirmPopup,
+                                      },
+                                    ]}
                                   />
                                 </div>
                               </dl>
                             </div>
-                          </div>
 
-                          
+                          </div>
+                          }
+
+                          {isFoundSP && 
                           <div className="tw-bg-white tw-px-[15px] tw-py-[11px] tw-rounded-[6px] tw-w-full tw-min-h-[140px] tw-flex tw-flex-col tw-justify-start">
                             <div className="tw-w-[37px] tw-h-[37px] tw-rounded-full tw-bg-[#ECEEF6] tw-grid tw-place-items-center tw-cursor-pointer">
                               <svg
@@ -303,7 +517,6 @@ const AdminDashboard = () => {
                                 </g>
                               </svg>
                             </div>
-
                             <div className="tw-mt-[12px]">
                               <dl>
                                 <dt className="tw-font-bold tw-text-[15px] tw-text-black tw-text-left">
@@ -313,29 +526,128 @@ const AdminDashboard = () => {
                                 <div className="tw-mt-5">
                                   <CustomTable
                                     title="All Candidates List"
-                                    columns={columns3}
-                                    data={[]}
+                                    columns={columns2}
+                                    data={enrollData.payload?.message}
                                     options={{
                                       actionsColumnIndex: -1,
                                       addRowPosition: "first",
-                                      selection: true,
+                                      selection: false,
 
                                       headerStyle: {
                                         backgroundColor: "#eaeffb",
                                         color: "#000",
                                       },
                                     }}
+                                    onSelectionChange={(rows) => setSelectedRows(rows)}
+                                    actions={[
+                                      {
+                                        icon: "checkaddalt",
+                                        tooltip: "Approve",
+                                        onClick: handleApprovePopup,
+                                      },
+                                      {
+                                        icon: "closeaddalt",
+                                        tooltip: "Reject",
+                                        onClick: handleRejectPopup,
+                                      },
+                                    ]}
                                   />
                                 </div>
                               </dl>
                             </div>
                           </div>
-                        
+                          }
                         </div>
                       </div>
                     </div>
                   </div>
+                  <Dialog
+                  open={isOpenDelete}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  >
+                  <DialogTitle id="alert-dialog-title">
+                    Delete
+                  </DialogTitle>
+                  <DialogContent>
+                    Are you sure you want to delete it ?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} variant="outlined" color="error" autoFocus>
+                      No
+                    </Button>
+                    <Button onClick={handleDelete} variant="contained" color="success" autoFocus>
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
 
+                <Dialog
+                  open={isOpenConfirm}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  >
+                  <DialogTitle id="alert-dialog-title">
+                    Confirm
+                  </DialogTitle>
+                  <DialogContent>
+                    Do you want to confirm it ?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} variant="outlined" color="error" autoFocus>
+                      No
+                    </Button>
+                    <Button onClick={handleConfirm} variant="contained" color="success" autoFocus>
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+                <Dialog
+                  open={isOpenApprove}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  >
+                  <DialogTitle id="alert-dialog-title">
+                    Approve
+                  </DialogTitle>
+                  <DialogContent>
+                    Do you want to approve it ?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} variant="outlined" color="error" autoFocus>
+                      No
+                    </Button>
+                    <Button onClick={handleApprove} variant="contained" color="success" autoFocus>
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+
+                <Dialog
+                  open={isOpenReject}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                  >
+                  <DialogTitle id="alert-dialog-title">
+                    Reject
+                  </DialogTitle>
+                  <DialogContent>
+                    Do you want to reject it ?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} variant="outlined" color="error" autoFocus>
+                      No
+                    </Button>
+                    <Button onClick={handleReject} variant="contained" color="success" autoFocus>
+                      Yes
+                    </Button>
+                  </DialogActions>
+                </Dialog>
                   <FooterAdmin />
                 </div>
               </div>

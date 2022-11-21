@@ -17,6 +17,9 @@ import { Button, TextField } from "@material-ui/core";
 import axios from "axios";
 import { useEffect } from "react";
 
+
+
+
 // Guard comoponent
 const Guard = () => {
   const [open, setOpen] = useState(false);
@@ -157,6 +160,7 @@ const dropDownHandler=(obj,id)=>{
                                 icon: "delete",
                                 tooltip: "Delete all selected rows",
                                 onClick: () => handleBulkDelete(),
+                                iconProps: {color: "error"}
                               },
                             ]}
                           

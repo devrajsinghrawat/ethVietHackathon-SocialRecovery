@@ -483,12 +483,16 @@ return (
                                         icon: "deleteaddalt",
                                         tooltip: "Delete",
                                         onClick: handleDeletePopup,
+                                        iconProps: {color: "error"}
+
                                       },
                                       {
                                         icon: "checkaddalt",
                                         tooltip: "Confirm",
                                         onClick: handleConfirmPopup,
+                                        iconProps: {color: "secondary"  }
                                       },
+                                    
                                     ]}
                                   />
                                 </div>

@@ -73,34 +73,33 @@ const Enroll = () => {
 
   const data = [
     {
-      SPAddress: "0xf9901cc6bbc8518088b2c8350fcd0635a23b250e",
+      SPAddress: "0xF9901CC6bbC8518088B2C8350fCd0635A23b250E",
       Rate: "10",
       Rating: 2,
       Fee:0.1,
     },
     {
-      SPAddress: "0x23ed077d5c630cf9b55324ca3bc706a70ffcb696",
+      SPAddress: "0x23Ed077d5c630cF9b55324Ca3bC706a70ffCb696",
       Rate: "10",
       Rating: 3,
       Fee:0.1,
     },
     {
-      SPAddress: "0xb2fb886eb402848b772469a34a7180747c7f7934",
+      SPAddress: "0xB2FB886Eb402848B772469a34a7180747C7F7934",
       Rate: "10",
       Rating: 3,
       Fee:0.1,
     },
     {
-      SPAddress: '0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf',
+      SPAddress: "0x4Fb0a43C637566f2f18B2eE7034f430A7F95dBcF",
       Rate: "0.5",
       Rating: 4,
       Fee:0.1,
     },
     {
-      SPAddress: "0x19b228f57165be621f49d96e26c459aa115eb83d",
+      SPAddress: "0x19b228f57165be621f49D96E26C459Aa115Eb83D",
       Rate: "20",
       Rating: 4,
-      Fee:0.1,
     },
   ];
 

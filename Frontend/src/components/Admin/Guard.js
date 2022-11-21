@@ -160,7 +160,7 @@ const dropDownHandler=(obj,id)=>{
                                 icon: "delete",
                                 tooltip: "Delete all selected rows",
                                 onClick: () => handleBulkDelete(),
-                                iconProps: {color: "error"}
+                                iconProps: {color: "success"}
                               },
                             ]}
                           

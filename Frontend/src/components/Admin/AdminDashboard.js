@@ -469,6 +469,7 @@ return (
                                     columns={columns2}
                                     data={enrollData.payload?.message}
                                     onSelectionChange={(rows) => setSelectedRows(rows)}
+                                  
                                     options={{
                                       actionsColumnIndex: -1,
                                       addRowPosition: "first",
@@ -478,19 +479,25 @@ return (
                                         color: "#000",
                                       },
                                     }}
+                                    
                                     actions={[
                                       {
-                                        icon: "deleteaddalt",
+                                        icon: "delete",
                                         tooltip: "Delete",
                                         onClick: handleDeletePopup,
-                                        iconProps: {color: "error"}
+                                        iconProps: {color: "error"},
+                                        
+                                        hidden:((rowdata=>rowdata.status  === "pending"))
+                                    
+                                                                      
 
                                       },
                                       {
                                         icon: "checkaddalt",
                                         tooltip: "Confirm",
                                         onClick: handleConfirmPopup,
-                                        iconProps: {color: "secondary"  }
+                                        iconProps: {color: "secondary"  },
+                                        hidden:((rowdata=>rowdata.status  === "pending"))
                                       },
                                     
                                     ]}

@@ -1,0 +1,11 @@
+
+post-> /enrollUser
+req.body ->  
+   {
+      "type": "enroll",
+      "walletAddress": "0x9140a5F347eD608256A4AAF268D8F48Bd630100b",
+      "userAddressMM": "0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6",
+      "spAddress": "0xF9901CC6bbC8518088B2C8350fCd0635A23b250E",
+      "fee": 0.1,
+      "status": "pending"
+   }

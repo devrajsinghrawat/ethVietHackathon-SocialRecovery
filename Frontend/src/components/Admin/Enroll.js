@@ -42,39 +42,29 @@ const Enroll = () => {
 
   const data = [
     {
-      SPAddress: "0xF2379d114d065c54d9C49dB8bB3a4035550c4e71",
+      SPAddress: "0xF9901CC6bbC8518088B2C8350fCd0635A23b250E",
       Rate: "10",
       Rating: 2,
     },
     {
-      SPAddress: "0xBf7E2F0d6F3cE0AeD6711385b474d0cbdd966965",
+      SPAddress: "0x23Ed077d5c630cF9b55324Ca3bC706a70ffCb696",
       Rate: "10",
       Rating: 3,
     },
     {
-      SPAddress: "0xEe45A7dfe2EbDB8d113Ec669F2682f27DAC5Fc31",
+      SPAddress: "0xB2FB886Eb402848B772469a34a7180747C7F7934",
       Rate: "10",
       Rating: 3,
     },
     {
-      SPAddress: "0xd5E5C7085d8e39e9242f910E1116B222c4002DC0",
+      SPAddress: "0x4Fb0a43C637566f2f18B2eE7034f430A7F95dBcF",
       Rate: "0.5",
       Rating: 4,
     },
     {
-      SPAddress: "0xF538E6A7b08e4E2770F81B97dB4bbB6C475a4d6c",
+      SPAddress: "0x19b228f57165be621f49D96E26C459Aa115Eb83D",
       Rate: "20",
       Rating: 4,
-    },
-    {
-      SPAddress: "0x8d7477E0A4D9A3A5E81FeE5B0956Abf374C961bA",
-      Rate: "20",
-      Rating: 5,
-    },
-    {
-      SPAddress: "0x8b286889C52F8EcBBF91BCc08BFB46f888A25881",
-      Rate: "15",
-      Rating: 5,
     },
   ];
 

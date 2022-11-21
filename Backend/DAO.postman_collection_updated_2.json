@@ -1,0 +1,578 @@
+{
+	"info": {
+		"_postman_id": "fead65aa-ba78-4eee-8759-93aee48f61be",
+		"name": "DAO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23251286"
+	},
+	"item": [
+		{
+			"name": "enrollUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"enroll\",\r\n    \"walletAddress\": \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\r\n    \"userAddressMM\": \"0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6\",\r\n    \"spAddress\": \"0xf9901cc6bbc8518088b2c8350fcd0635a23b250e\",\r\n    \"fee\": 0.1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ATSURL}}/enrollUser",
+					"host": [
+						"{{ATSURL}}"
+					],
+					"path": [
+						"enrollUser"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "enrollUser",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"enroll\",\r\n    \"walletAddress\": \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\r\n    \"userAddressMM\": \"0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6\",\r\n    \"spAddress\": \"0xf9901cc6bbc8518088b2c8350fcd0635a23b250e\",\r\n    \"fee\": 0.1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ATSURL}}/enrollUser",
+							"host": [
+								"{{ATSURL}}"
+							],
+							"path": [
+								"enrollUser"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "109"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"6d-ENuQv6XcgrKxNykIXLY8wHFN8nU\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 17 Nov 2022 02:58:39 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"code\": \"\",\n    \"message\": \"Operation performed successfully\",\n    \"payload\": {\n        \"status\": true,\n        \"message\": 12\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "getEnrollData",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ATSURL}}/getEnrollData?userAddress=0xf9901cc6bbc8518088b2c8350fcd0635a23b250e",
+					"host": [
+						"{{ATSURL}}"
+					],
+					"path": [
+						"getEnrollData"
+					],
+					"query": [
+						{
+							"key": "userAddress",
+							"value": "0xf9901cc6bbc8518088b2c8350fcd0635a23b250e"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "user_logic",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ATSURL}}/getEnrollData?userAddress=0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6",
+							"host": [
+								"{{ATSURL}}"
+							],
+							"path": [
+								"getEnrollData"
+							],
+							"query": [
+								{
+									"key": "userAddress",
+									"value": "0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1079"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"437-hi1tXkIo/1KZZOeu/ej3eGemNbA\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 17 Nov 2022 03:06:46 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"code\": \"\",\n    \"message\": \"Operation performed successfully\",\n    \"payload\": {\n        \"status\": true,\n        \"message\": [\n            {\n                \"enrollReqId\": 8,\n                \"spAddress\": \"0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf\",\n                \"type\": \"enroll\",\n                \"fee\": 0.1,\n                \"walletAddress\": \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\n                \"userAddressMM\": \"0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6\",\n                \"status\": \"pending\"\n            },\n            {\n                \"enrollReqId\": 9,\n                \"spAddress\": \"0x19b228f57165be621f49d96e26c459aa115eb83d\",\n                \"type\": \"enroll\",\n                \"fee\": 0.1,\n                \"walletAddress\": \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\n                \"userAddressMM\": \"0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6\",\n                \"status\": \"pending\"\n            },\n            {\n                \"enrollReqId\": 10,\n                \"spAddress\": \"0xb2fb886eb402848b772469a34a7180747c7f7934\",\n                \"type\": \"enroll\",\n                \"fee\": 0.1,\n                \"walletAddress\": \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\n                \"userAddressMM\": \"0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6\",\n                \"status\": \"pending\"\n            },\n            {\n                \"enrollReqId\": 11,\n                \"spAddress\": \"0x23ed077d5c630cf9b55324ca3bc706a70ffcb696\",\n                \"type\": \"enroll\",\n                \"fee\": 0.1,\n                \"walletAddress\": \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\n                \"userAddressMM\": \"0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6\",\n                \"status\": \"approved\"\n            }\n        ]\n    }\n}"
+				},
+				{
+					"name": "sp_logic",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ATSURL}}/getEnrollData?userAddress=0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf",
+							"host": [
+								"{{ATSURL}}"
+							],
+							"path": [
+								"getEnrollData"
+							],
+							"query": [
+								{
+									"key": "userAddress",
+									"value": "0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "350"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"15e-022A90ZYyydkoTwU1JJR6f3Jg8U\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 17 Nov 2022 03:08:58 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"code\": \"\",\n    \"message\": \"Operation performed successfully\",\n    \"payload\": {\n        \"status\": true,\n        \"message\": [\n            {\n                \"enrollReqId\": 8,\n                \"spAddress\": \"0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf\",\n                \"type\": \"enroll\",\n                \"fee\": 0.1,\n                \"walletAddress\": \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\n                \"userAddressMM\": \"0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6\",\n                \"status\": \"pending\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "actUserEnrollRequest",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reqId\":\"12\",\r\n    \"action\":\"rejected\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ATSURL}}/actUserEnrollRequest",
+					"host": [
+						"{{ATSURL}}"
+					],
+					"path": [
+						"actUserEnrollRequest"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "approved",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reqId\":\"11\",\r\n    \"action\":\"approved\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ATSURL}}/actUserEnrollRequest",
+							"host": [
+								"{{ATSURL}}"
+							],
+							"path": [
+								"actUserEnrollRequest"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "126"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7e-ttSTJf+mUlGCMrkV8PNue7NPOW4\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 17 Nov 2022 03:04:43 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"code\": \"\",\n    \"message\": \"Operation performed successfully\",\n    \"payload\": {\n        \"status\": true,\n        \"message\": \"Status is updated\"\n    }\n}"
+				},
+				{
+					"name": "rejected",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reqId\":\"12\",\r\n    \"action\":\"rejected\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ATSURL}}/actUserEnrollRequest",
+							"host": [
+								"{{ATSURL}}"
+							],
+							"path": [
+								"actUserEnrollRequest"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "126"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7e-ttSTJf+mUlGCMrkV8PNue7NPOW4\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 17 Nov 2022 03:05:37 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"code\": \"\",\n    \"message\": \"Operation performed successfully\",\n    \"payload\": {\n        \"status\": true,\n        \"message\": \"Status is updated\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "userConfirmEnrollRequest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reqId\":8\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ATSURL}}/userConfirmEnrollRequest",
+					"host": [
+						"{{ATSURL}}"
+					],
+					"path": [
+						"userConfirmEnrollRequest"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "userConfirmEnrollRequest",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reqId\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ATSURL}}/userConfirmEnrollRequest",
+							"host": [
+								"{{ATSURL}}"
+							],
+							"path": [
+								"userConfirmEnrollRequest"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "166"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"a6-hAxsE+tlmT8deHnkdMgcecLGvP8\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 17 Nov 2022 03:10:23 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"code\": \"\",\n    \"message\": \"Operation performed successfully\",\n    \"payload\": {\n        \"status\": true,\n        \"message\": \"Status is confirmed and guarding_details table is updated\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "getGuardMeDetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ATSURL}}/getGuardMeDetails?userAddress=0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6",
+					"host": [
+						"{{ATSURL}}"
+					],
+					"path": [
+						"getGuardMeDetails"
+					],
+					"query": [
+						{
+							"key": "userAddress",
+							"value": "0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "getGuardMeDetails",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ATSURL}}/getGuardMeDetails?userAddress=0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6",
+							"host": [
+								"{{ATSURL}}"
+							],
+							"path": [
+								"getGuardMeDetails"
+							],
+							"query": [
+								{
+									"key": "userAddress",
+									"value": "0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "343"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"157-y19X1T7EQJ+UySpZgrbZklRptxM\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 17 Nov 2022 09:06:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"code\": \"\",\n    \"message\": \"Operation performed successfully\",\n    \"payload\": {\n        \"status\": true,\n        \"message\": [\n            [\n                \"0x9140a5f347ed608256a4aaf268d8f48bd630100b\",\n                [\n                    {\n                        \"sp\": \"0x19b228f57165be621f49d96e26c459aa115eb83d\",\n                        \"fee\": 0.1\n                    },\n                    {\n                        \"sp\": \"0x4fb0a43c637566f2f18b2ee7034f430a7f95dbcf\",\n                        \"fee\": 0.1\n                    },\n                    {\n                        \"sp\": \"0xb2fb886eb402848b772469a34a7180747c7f7934\",\n                        \"fee\": 0.1\n                    }\n                ]\n            ]\n        ]\n    }\n}"
+				}
+			]
+		}
+	]
+}

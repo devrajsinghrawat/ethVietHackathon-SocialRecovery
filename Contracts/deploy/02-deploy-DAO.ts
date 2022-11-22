@@ -13,13 +13,13 @@ const deployDAO: DeployFunction = async function (hre: HardhatRuntimeEnvironment
 
     const SRDAOContract = await deploy("SocialRecoveryDAO", {
         from: deployer,
-        args: ["0x117a61ba4dd4F61C90d212337D0C804b63607fd5"]
+        args: ["0xF427C65E17eb1ABa6dA6b26092c31fddA04dD0Bb"]
     });
 
     console.log(`deployed to: ${SRDAOContract.address}`);
     await setTimeout(async () => { }, 10000);
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        await verify(SRDAOContract.address, ["0x117a61ba4dd4F61C90d212337D0C804b63607fd5"])
+        await verify(SRDAOContract.address, ["0xF427C65E17eb1ABa6dA6b26092c31fddA04dD0Bb"])
     }
 }
 

@@ -1,4 +1,5 @@
 import { BaseProvider } from "@ethersproject/providers";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { deployments, ethers, network } from "hardhat";
 //import { SignerWithAddress } from "hardhat-deploy-ethers/signers";
@@ -7,7 +8,7 @@ import { contracts, SocialRecoveryDAO } from "../typechain-types";
 
 describe("DAO Unit test", async () => {
     let SRDAO: SocialRecoveryDAO;
-    let accounts;
+    let accounts: SignerWithAddress[];
     let provider: BaseProvider;
     beforeEach(async () => {
         await deployments.fixture(["all"]);

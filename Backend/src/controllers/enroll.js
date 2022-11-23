@@ -155,4 +155,130 @@ enroll.getGuardMeDetails = async function (req, res) {
     }
   });
 };
+
+enroll.requestRecoverySignature = async function (req, res) {
+  enrollModel.requestRecoverySignature(req.body).then((result) => {
+    if (result?.status) {
+      if (result.status == true) {
+        helper.successHandler(res, { payload: result });
+        // helper.successHandler(res, {
+        //   payload: result,
+        // });
+      } else {
+        helper.errorHandler(
+          res,
+          {
+            status: false,
+            message: result,
+          },
+          500
+        );
+      }
+    } else {
+      helper.errorHandler(
+        res,
+        {
+          status: false,
+          message: result,
+        },
+        500
+      );
+    }
+  });
+};
+
+enroll.generateSign = async function (req, res) {
+  enrollModel.generateSign(req.body).then((result) => {
+    if (result?.status) {
+      if (result.status == true) {
+        helper.successHandler(res, { payload: result });
+        // helper.successHandler(res, {
+        //   payload: result,
+        // });
+      } else {
+        helper.errorHandler(
+          res,
+          {
+            status: false,
+            message: result,
+          },
+          500
+        );
+      }
+    } else {
+      helper.errorHandler(
+        res,
+        {
+          status: false,
+          message: result,
+        },
+        500
+      );
+    }
+  });
+};
+
+enroll.fetchRecoveryMessage = async function (req, res) {
+  console.log(req.query);
+  enrollModel.fetchRecoveryMessage(req.query).then((result) => {
+    if (result?.status) {
+      if (result.status == true) {
+        helper.successHandler(res, { payload: result });
+        // helper.successHandler(res, {
+        //   payload: result,
+        // });
+      } else {
+        helper.errorHandler(
+          res,
+          {
+            status: false,
+            message: result,
+          },
+          500
+        );
+      }
+    } else {
+      helper.errorHandler(
+        res,
+        {
+          status: false,
+          message: result,
+        },
+        500
+      );
+    }
+  });
+};
+
+enroll.getSignature = async function (req, res) {
+  enrollModel.getSignature(req.query).then((result) => {
+    if (result?.status) {
+      if (result.status == true) {
+        helper.successHandler(res, { payload: result });
+        // helper.successHandler(res, {
+        //   payload: result,
+        // });
+      } else {
+        helper.errorHandler(
+          res,
+          {
+            status: false,
+            message: result,
+          },
+          500
+        );
+      }
+    } else {
+      helper.errorHandler(
+        res,
+        {
+          status: false,
+          message: result,
+        },
+        500
+      );
+    }
+  });
+};
+
 module.exports = enroll;

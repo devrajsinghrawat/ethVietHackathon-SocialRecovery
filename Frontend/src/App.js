@@ -6,7 +6,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { SessionProvider } from 'next-auth/react';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
-const { provider, webSocketProvider, chains } = configureChains([chain.mainnet, chain.polygon, chain.polygonMumbai ], [publicProvider()]);
+const { provider, webSocketProvider, chains } = configureChains([chain.mainnet, chain.polygon, chain.polygonMumbai, chain.arbitrum, chain.hardhat, chain.optimism, chain.localhost ], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',
@@ -20,7 +20,6 @@ const client = createClient({
   // added connectors from rainbowkit
   connectors,
 });
-
 
 function App(Component, pageProps) {
 

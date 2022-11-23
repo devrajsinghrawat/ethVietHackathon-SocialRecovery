@@ -129,11 +129,21 @@ const data = [
           <div className="row" id="main">
             <div id="page-top">
               <div id="wrapper">
+              {
+                // sidebar Admin
+              }
                 <SideBarAdmin />
 
                 <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
+                  {
+                    // Tool Bar Admin
+                  }
                     <TopBarAdmin />
+
+                    {
+                      // Enroll Panel and CustomTable
+                    }
 
                     <div className="container-fluid">
                       <div className="mb-4 d-sm-flex align-items-center justify-content-between">
@@ -146,6 +156,7 @@ const data = [
                         >
                           Enroll Me
                         </div>
+                        
                       </div>
 
                       <div className="compny">
@@ -176,8 +187,7 @@ const data = [
                             }
                           ]}
                             
-                            open={open}
-                            setOpen={setOpen}
+                           
                           />
                         </div>
                       </div>

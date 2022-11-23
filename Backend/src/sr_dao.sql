@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2022 at 06:42 AM
+-- Generation Time: Nov 21, 2022 at 02:22 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -48,6 +48,19 @@ INSERT INTO `guarding_details` (`walletAddress`, `userAddressMM`, `spAddress`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `signature_request_data`
+--
+
+CREATE TABLE `signature_request_data` (
+  `reqId` int(11) NOT NULL,
+  `recoveryMsg` varchar(255) NOT NULL,
+  `sigData` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_request`
 --
 
@@ -62,13 +75,6 @@ CREATE TABLE `user_request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user_request`
---
-
-INSERT INTO `user_request` (`enrollReqId`, `spAddress`, `type`, `fee`, `walletAddress`, `userAddressMM`, `status`) VALUES
-(37, '0xf9901cc6bbc8518088b2c8350fcd0635a23b250e', 'enroll', 0.1, '0x9140a5f347ed608256a4aaf268d8f48bd630100b', '0xCce0886d48BeeDa8ba9f136C74493CE0AD799Bf6', 'pending');
-
---
 -- Indexes for dumped tables
 --
 
@@ -79,11 +85,17 @@ ALTER TABLE `guarding_details`
   ADD KEY `address` (`walletAddress`,`spAddress`) USING BTREE;
 
 --
+-- Indexes for table `signature_request_data`
+--
+ALTER TABLE `signature_request_data`
+  ADD KEY `reqId` (`reqId`) USING BTREE;
+
+--
 -- Indexes for table `user_request`
 --
 ALTER TABLE `user_request`
   ADD PRIMARY KEY (`enrollReqId`),
-  ADD UNIQUE KEY `address` (`spAddress`,`walletAddress`) USING BTREE;
+  ADD UNIQUE KEY `address` (`spAddress`,`walletAddress`,`type`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -93,7 +105,7 @@ ALTER TABLE `user_request`
 -- AUTO_INCREMENT for table `user_request`
 --
 ALTER TABLE `user_request`
-  MODIFY `enrollReqId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `enrollReqId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

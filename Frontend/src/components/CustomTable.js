@@ -2,8 +2,6 @@ import MaterialTable from "material-table";
 import Pagination from "@mui/material/Pagination";
 import { makeStyles } from "@mui/styles";
 
-
-
 const CustomTable = (props) => {
  const {open,setOpen } = props;
   const useStyles = makeStyles({
@@ -129,6 +127,7 @@ const CustomTable = (props) => {
       }}
      actions={props.actions}
     
+   
     />
   );
 };

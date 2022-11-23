@@ -9,4 +9,11 @@ module.exports = function () {
     enrollController.userConfirmEnrollRequest
   );
   app.get('/getGuardMeDetails', enrollController.getGuardMeDetails);
+  app.post(
+    '/requestRecoverySignature',
+    enrollController.requestRecoverySignature
+  );
+  app.get('/fetchRecoveryMessage', enrollController.fetchRecoveryMessage);
+  app.patch('/generateSign', enrollController.generateSign);
+  app.get('/getSignature', enrollController.getSignature);
 };

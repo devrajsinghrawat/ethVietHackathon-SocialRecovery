@@ -33,11 +33,10 @@ enrollModel.getEnrollData = async function (body) {
   let sql;
   let deferred = q.defer();
   userAddress.toLowerCase();
-  console.log("Sp provider",userAddress);
+  console.log('Sp provider', userAddress);
   // SP login
-  console.log("Sp provider",isServiceProvider(userAddress));
+  console.log('Sp provider', isServiceProvider(userAddress));
   if (isServiceProvider(userAddress)) {
-    
     sql =
       'SELECT `enrollReqId`,`type`,`fee`,`status` FROM `user_request` WHERE `spAddress` = ?  AND `status` IN ("pending")';
     pool.query(sql, [userAddress], (error, result) => {
@@ -55,7 +54,7 @@ enrollModel.getEnrollData = async function (body) {
   // User login
   else {
     sql =
-      'SELECT * FROM `user_request` WHERE `userAddressMM` = ? AND `status` IN ("pending","approved")';
+      'SELECT * FROM `user_request` WHERE `userAddressMM` = ? AND `status` IN ("pending","approved", "signed")';
     pool.query(sql, [userAddress], (error, result) => {
       if (error) {
         deferred.reject(error);
@@ -69,6 +68,7 @@ enrollModel.getEnrollData = async function (body) {
     return deferred.promise;
   }
 };
+
 enrollModel.actUserEnrollRequest = async function (body) {
   const { reqId: enrollReqId, action: status } = body;
   let deferred = q.defer();
@@ -172,6 +172,129 @@ enrollModel.getGuardMeDetails = async function (body) {
       deferred.resolve({
         status: true,
         message: arr,
+      });
+    }
+  });
+  return deferred.promise;
+};
+
+enrollModel.requestRecoverySignature = async function (body) {
+  const {
+    walletAddress,
+    spAddress,
+    recoveryMsg,
+    userAddress: userAddressMM,
+    fee,
+  } = body;
+
+  console.log('Request body --> ', body);
+
+  let status = 'pending';
+  let type = 'sign';
+  let deferred = q.defer();
+  let sql = 'INSERT INTO user_request SET ? ';
+  pool.query(
+    sql,
+    [{ type, walletAddress, userAddressMM, spAddress, fee, status }],
+    function (error, result) {
+      if (error) {
+        console.log(error);
+        deferred.reject(error);
+      } else {
+        const reqId = result.insertId;
+        sql = 'INSERT INTO signature_request_data SET ?';
+        pool.query(sql, [{ reqId, status, recoveryMsg }], (error, result) => {
+          if (error) {
+            console.log(error);
+            deferred.reject(error);
+          } else {
+            deferred.resolve({
+              status: true,
+              message: `reqId: ${reqId} is added in user_request and signature_request_data`,
+            });
+          }
+        });
+      }
+    }
+  );
+  return deferred.promise;
+};
+
+enrollModel.fetchRecoveryMessage = async function (body) {
+  const { reqId } = body;
+  let deferred = q.defer();
+
+  console.log('reqId', reqId);
+
+  sql = 'SELECT recoveryMsg FROM `signature_request_data` WHERE `reqId` = ?';
+  pool.query(sql, [reqId], (error, result) => {
+    if (error) {
+      deferred.reject(error);
+    } else {
+      deferred.resolve({
+        status: true,
+        message: result,
+      });
+    }
+  });
+  return deferred.promise;
+};
+
+enrollModel.generateSign = async function (body) {
+  const { reqId } = body;
+  let deferred = q.defer();
+  let sigData = `sign+${reqId}`;
+  let status = 'signed';
+
+  let sql =
+    'UPDATE `signature_request_data` SET `sigData` = ? , `status` = ? WHERE `reqId` = ?';
+  pool.query(sql, [sigData, status, reqId], (error, result) => {
+    if (error) {
+      console.log(error);
+      deferred.reject(error);
+    } else {
+      sql = 'UPDATE `user_request` SET `status` = ? WHERE `enrollReqId` = ?';
+      pool.query(sql, [status, reqId], (error, result) => {
+        if (error) {
+          console.log(error);
+          deferred.reject(error);
+        } else {
+          deferred.resolve({
+            status: true,
+            message: `reqId: ${reqId},status updated in user_request and status and sigdata updated in signature_request_data`,
+          });
+        }
+      });
+    }
+  });
+  return deferred.promise;
+};
+enrollModel.getSignature = async function (body) {
+  const { reqId } = body;
+  let deferred = q.defer();
+  let status = 'confirm';
+  let sql =
+    'UPDATE `signature_request_data` SET `status` = ? WHERE `reqId` = ?';
+  pool.query(sql, [status, reqId], (error, result) => {
+    if (error) {
+      console.log(error);
+      deferred.reject(error);
+    } else {
+      sql = 'UPDATE `user_request` SET `status` = ? WHERE `enrollReqId` = ?';
+      pool.query(sql, [status, reqId], (error, result) => {
+        if (error) {
+          console.log(error);
+          deferred.reject(error);
+        } else {
+          sql =
+            'select `sigData` from `signature_request_data` where `reqId` = ?';
+          pool.query(sql, [reqId], (error, result) => {
+            deferred.resolve({
+              status: true,
+              message: result,
+            });
+          });
+        }
       });
     }
   });

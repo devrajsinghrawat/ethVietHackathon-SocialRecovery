@@ -53,7 +53,7 @@ export default function SideBarAdmin() {
         >
           <Link className="nav-link" to="/enroll">
             <i className="fas fa-fw fa-tachometer-alt"></i>
-            <span>Enroll</span>
+            <span>Enroll Me</span>
           </Link>
         </li>
 
@@ -67,7 +67,7 @@ export default function SideBarAdmin() {
         >
           <Link className="nav-link" to="/guard">
             <i className="fas fa-fw fa-tachometer-alt"></i>
-            <span>Guard</span>
+            <span>Guard Me</span>
           </Link>
         </li>
 

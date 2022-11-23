@@ -2,22 +2,6 @@ import MaterialTable from "material-table";
 import Pagination from "@mui/material/Pagination";
 import { makeStyles } from "@mui/styles";
 
-const tableIcons = {
-  Edit: () => <button className="table-button">Edit</button>,
-  Delete: () => (
-    <button
-      className="table-button"
-      style={{
-        background: "red",
-        color: "white",
-        borderColor: "red",
-      }}
-    >
-      Delete
-    </button>
-  ),
-};
-
 const CustomTable = (props) => {
  const {open,setOpen } = props;
   const useStyles = makeStyles({
@@ -108,7 +92,6 @@ const CustomTable = (props) => {
     
     <MaterialTable
       {...props}
-      icons={tableIcons}
       components={{
         Pagination: (props) => {
           return <CustomPagination {...props} />;
@@ -142,13 +125,9 @@ const CustomTable = (props) => {
           width: "100% !important",
         },
       }}
-      actions={[
-        {
-          icon: 'save',
-          tooltip: 'Save User',
-          onClick: (event, rowData) => setOpen(true)
-        }
-      ]}
+     actions={props.actions}
+    
+   
     />
   );
 };

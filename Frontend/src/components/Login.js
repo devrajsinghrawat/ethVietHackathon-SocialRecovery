@@ -22,9 +22,10 @@ export default function Login(props) {
   useEffect(() => {
     const handleAuth = async () => {
       const userData = { address, chain: chain.id, network: "evm" };
-      const UAdd = userData.address;
-      localStorage.setItem("id", UAdd);
+      const userAddress = userData.address;
+      localStorage.setItem("id", userAddress);
       const getData = localStorage.getItem("id");
+      console.log("UAdd",userAddress);
       setdata(getData);
 
       await axios

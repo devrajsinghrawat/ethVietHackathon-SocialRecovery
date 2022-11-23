@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import FooterAdmin from "./FooterAdmin";
 import TopBarAdmin from "./TopBarAdmin";
@@ -16,16 +16,22 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import "react-toastify/dist/ReactToastify.css";
 import { Button, TextField } from "@material-ui/core";
+import axios from "axios";
 
 const Enroll = () => {
   const [open, setOpen] = useState(false);
   const [wallet,setWallet]=useState("");
-
+  const userId=localStorage.getItem("id");
+  // const userId="0xcce0886d48beeda8ba9f136c74493ce0ad799bf6";
+  const [fees,setFee]= useState("");
+  const [spAddress,setSp]=useState("");
+  console.log("this is user ID"+ userId);
 
   const columns = [
     { title: "SP Address", field: "SPAddress" },
     { title: "Rate", field: "Rate" },
     { title: "Rating", field: "Rating" },
+    { title: "Fee", field: "Fee" },
   ];
 
   const handleClickOpen = () => {
@@ -35,50 +41,86 @@ const Enroll = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const setWalletInfo=e=>{
-    setWallet(e.target.value);
-    console.log(e.targets.value);
-  }
+   const Enroll= async (user) => {
+    setOpen(false)
+    try {
+        const url = 'http://localhost:3001/enrollUser/';
+        const param = { 
+          type:"enroll",
+          walletAddress:wallet,
+          userAddressMM:userId,
+          spAddress:spAddress,
+          fee:fees
+        };
+        return await axios.post(url, param)
+            .then(response => {
+              toast.success(response.data.message, {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            });
+       
+    } catch (error) {
+        console.log('error while calling Signup API: ', error);
+    }
+}
 
-  const data = [
-    {
-      SPAddress: "0xF2379d114d065c54d9C49dB8bB3a4035550c4e71",
-      Rate: "10",
-      Rating: 2,
-    },
-    {
-      SPAddress: "0xBf7E2F0d6F3cE0AeD6711385b474d0cbdd966965",
-      Rate: "10",
-      Rating: 3,
-    },
-    {
-      SPAddress: "0xEe45A7dfe2EbDB8d113Ec669F2682f27DAC5Fc31",
-      Rate: "10",
-      Rating: 3,
-    },
-    {
-      SPAddress: "0xd5E5C7085d8e39e9242f910E1116B222c4002DC0",
-      Rate: "0.5",
-      Rating: 4,
-    },
-    {
-      SPAddress: "0xF538E6A7b08e4E2770F81B97dB4bbB6C475a4d6c",
-      Rate: "20",
-      Rating: 4,
-    },
-    {
-      SPAddress: "0x8d7477E0A4D9A3A5E81FeE5B0956Abf374C961bA",
-      Rate: "20",
-      Rating: 5,
-    },
-    {
-      SPAddress: "0x8b286889C52F8EcBBF91BCc08BFB46f888A25881",
-      Rate: "15",
-      Rating: 5,
-    },
-  ];
+
+const data = [
+  {
+    SPAddress: "0xF9901CC6bbC8518088B2C8350fCd0635A23b250E",
+    Rate: "10",
+    Rating: 2,
+    Fee:0.1,
+  },
+  {
+    SPAddress: "0x23Ed077d5c630cF9b55324Ca3bC706a70ffCb696",
+    Rate: "10",
+    Rating: 3,
+    Fee:0.1,
+  },
+  {
+    SPAddress: "0xB2FB886Eb402848B772469a34a7180747C7F7934",
+    Rate: "10",
+    Rating: 3,
+    Fee:0.1,
+  },
+  {
+    SPAddress: "0x4Fb0a43C637566f2f18B2eE7034f430A7F95dBcF",
+    Rate: "0.5",
+    Rating: 4,
+    Fee:0.1,
+  },
+  {
+    SPAddress: "0x19b228f57165be621f49D96E26C459Aa115Eb83D",
+    Rate: "20",
+    Rating: 4,
+  },
+];
 
   const handleBulkDelete = () => {};
+
+  const setWalletInfo=(e)=>{
+    
+    console.log(e.target.value);
+    setWallet(e.target.value)
+      
+  }
+
+  const handleRowUpdate = (newData, oldData, resolve,reject) => {
+    setOpen(true);
+    console.log("Data___",oldData.Fee);
+    setFee(oldData.Fee);
+    setSp(oldData.SPAddress);
+    
+     
+ }
+
 
   return (
     <>
@@ -87,11 +129,21 @@ const Enroll = () => {
           <div className="row" id="main">
             <div id="page-top">
               <div id="wrapper">
+              {
+                // sidebar Admin
+              }
                 <SideBarAdmin />
 
                 <div id="content-wrapper" className="d-flex flex-column">
                   <div id="content">
+                  {
+                    // Tool Bar Admin
+                  }
                     <TopBarAdmin />
+
+                    {
+                      // Enroll Panel and CustomTable
+                    }
 
                     <div className="container-fluid">
                       <div className="mb-4 d-sm-flex align-items-center justify-content-between">
@@ -104,6 +156,7 @@ const Enroll = () => {
                         >
                           Enroll Me
                         </div>
+                        
                       </div>
 
                       <div className="compny">
@@ -122,15 +175,19 @@ const Enroll = () => {
                                 color: "#000",
                               },
                             }}
-                            actions={[
-                              {
-                                icon: "personaddalt",
-                                tooltip: "Request",
-                                onClick: handleBulkDelete,
-                              },
-                            ]}
-                            open={open}
-                            setOpen={setOpen}
+
+                          actions={[
+                            {
+                              icon: 'save',
+                              tooltip: 'Save User',
+                              onClick: (event, rowData) => {
+                                handleRowUpdate(event, rowData);
+                                console.log(rowData);
+                              }
+                            }
+                          ]}
+                            
+                           
                           />
                         </div>
                       </div>
@@ -146,13 +203,12 @@ const Enroll = () => {
                     {"Enter your Wallet Address"}
                   </DialogTitle>
                   <DialogContent>
-                  <TextField id="outlined-basic"  variant="outlined"  style={{width:"400px",height:"100px",marginTop:"10px"}}
-                  onChange={setWalletInfo} value={wallet}/>
+                  <TextField id="outlined-basic" value={wallet}  variant="outlined"  style={{width:"300px",height:"70px",marginTop:"10px"}}
+                  onChange={(e)=>setWalletInfo(e)} />
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
-                    <Button onClick={handleClose} autoFocus>
-                      Agree
+                    <Button onClick={Enroll} autoFocus>
+                      Done
                     </Button>
                   </DialogActions>
                 </Dialog>
